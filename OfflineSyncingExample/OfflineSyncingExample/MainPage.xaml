@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="OfflineSyncingExample.MainPage">
+
+    <StackLayout Orientation="Vertical">
+
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Add"
+                    Clicked="OnAddClicked"/>
+            <Button Text="Sync"
+                    Clicked="OnSyncClicked"/>
+
+        </StackLayout>
+
+        <ListView ItemsSource="{Binding Contacts}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}" Detail="{Binding Number}">
+                        <TextCell.ContextActions>
+                            <MenuItem Text="Delete" Clicked="OnDeleteClicked" IsDestructive="True" CommandParameter="{Binding .}"/>
+                        </TextCell.ContextActions>
+                    </TextCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
