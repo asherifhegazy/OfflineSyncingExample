@@ -6,27 +6,47 @@
              mc:Ignorable="d"
              x:Class="OfflineSyncingExample.MainPage">
 
-    <StackLayout Orientation="Vertical">
+    <AbsoluteLayout>
+        <StackLayout Orientation="Vertical"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All">
 
-        <StackLayout Orientation="Horizontal">
-            <Button Text="Add"
-                    Clicked="OnAddClicked"/>
-            <Button Text="Sync"
-                    Clicked="OnSyncClicked"/>
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Add"
+                        Command="{Binding AddCommand}"/>
+                <Button Text="Sync"
+                        Command="{Binding SyncCommand}"/>
 
+            </StackLayout>
+
+            <ListView ItemsSource="{Binding Contacts}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Name}"
+                                  Detail="{Binding Number}">
+                            <TextCell.ContextActions>
+                                <MenuItem Text="Delete"
+                                          Clicked="OnDeleteClicked"
+                                          IsDestructive="True"
+                                          CommandParameter="{Binding .}"/>
+                            </TextCell.ContextActions>
+                        </TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
+        
+        <ContentView BackgroundColor="Black"
+                     Opacity="0.5"
+                     AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All"
+                     IsVisible="{Binding IsLoading}"/>
 
-        <ListView ItemsSource="{Binding Contacts}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Name}" Detail="{Binding Number}">
-                        <TextCell.ContextActions>
-                            <MenuItem Text="Delete" Clicked="OnDeleteClicked" IsDestructive="True" CommandParameter="{Binding .}"/>
-                        </TextCell.ContextActions>
-                    </TextCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </StackLayout>
+        <ActivityIndicator IsVisible="{Binding IsLoading}"
+                           IsRunning="True"  
+                           BackgroundColor="Transparent"
+                           AbsoluteLayout.LayoutBounds="0.5, 0.5, 100, 100"
+                           AbsoluteLayout.LayoutFlags="PositionProportional"/>
+    </AbsoluteLayout>
 
 </ContentPage>
